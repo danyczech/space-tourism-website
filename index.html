@@ -12,9 +12,9 @@
       href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Bellefair&family=Barlow:wght@400;700&display=swap"
       rel="stylesheet"
     />
-
     <link rel="stylesheet" href="index.css" />
   </head>
+
   <body class="home">
     <header class="primary-header flex">
       <div>
@@ -24,8 +24,15 @@
           class="logo"
         />
       </div>
+      <button class="mobile-nav-toggle" aria-controls="primary-navigation">
+        <span class="sr-only" aria-expanded="false">Menu</span>
+      </button>
       <nav>
-        <ul class="primary-navigation underline-indicators flex">
+        <ul
+          id="primary-navigation"
+          data-visible="false"
+          class="primary-navigation underline-indicators flex"
+        >
           <li class="active">
             <a
               class="ff-sans-cond uppercase text-white letter-spacing-2"
@@ -58,7 +65,7 @@
       </nav>
     </header>
 
-    <div class="grid-container">
+    <div class="grid-container grid-container--home">
       <div>
         <h1 class="text-accent fs-500 ff-sans-cond uppercase letter-spacing-1">
           So, you want to travel to
@@ -72,9 +79,7 @@
         </p>
       </div>
       <div>
-        <a
-          href="#"
-          class="large-button uppercase ff-serif fs-600 text-dark bg-white"
+        <a href="#" class="large-button uppercase ff-serif text-dark bg-white"
           >Explore</a
         >
       </div>

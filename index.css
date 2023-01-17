@@ -88,6 +88,8 @@ body {
 
   display: grid;
   grid-template-rows: min-content 1fr;
+
+  overflow-x: hidden;
 }
 
 /* make images easier to work with */
@@ -151,26 +153,41 @@ select {
 }
 
 .grid-container {
+  text-align: center;
   display: grid;
+  place-items: center;
+  padding-inline: 1rem;
+}
+
+.grid-container * {
+  /* cokoli v grid-container nebude delší než 50 znaků*/
+  max-width: 50ch;
 }
 
 @media (min-width: 45rem) {
   .grid-container {
+    text-align: left;
     column-gap: var(--container-gap, 2rem);
-    grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(
-        2rem,
+    grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(
+        1rem,
         1fr
       );
   }
 
   .grid-container > *:first-child {
     grid-column: 2;
-    outline: 1px solid red;
   }
 
   .grid-container > *:last-child {
     grid-column: 3;
-    outline: 1px solid yellow;
+  }
+
+  .grid-container--home {
+    padding-bottom: max(
+      6rem,
+      20vh
+    ); /* pro velké obrazovky - vezme větší z daných hodnot a použije ji - aby se obsah neutrhl a nezlůstal moc dole */
+    align-items: end;
   }
 }
 
@@ -277,6 +294,7 @@ select {
 /* ------------------- */
 
 .large-button {
+  font-size: 2rem;
   position: relative;
   display: inline-grid;
   z-index: 1;
@@ -305,12 +323,24 @@ select {
   transform: scale(1.5);
 }
 
+/* primary-header */
+
+.logo {
+  margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
+}
+
+.primary-header {
+  justify-content: space-between;
+  align-items: center;
+}
+
 .primary-navigation {
-  --gap: 8rem;
+  --gap: clamp(1.5rem, 5vw, 3.5rem);
   --underline-gap: 2rem;
   list-style: none;
   padding: 0;
   margin: 0;
+  background: hsl(var(--clr-dark) / 0.95);
 }
 
 .primary-navigation a {
@@ -320,6 +350,96 @@ select {
 .primary-navigation a > span {
   font-weight: 700;
   margin-right: 0.5em;
+}
+
+.mobile-nav-toggle {
+  display: none;
+}
+
+@supports (backdrop-filter: blur(1rem)) {
+  /*  pokud browser podporuje tuto funkci a hodnotu, použije se, jinak se zobrazí fallback výše*/
+  .primary-navigation {
+    background: hsl(var(--clr-white) / 0.05);
+    backdrop-filter: blur(1.5rem);
+  }
+}
+
+@media (max-width: 35rem) {
+  .primary-navigation {
+    --underline-gap: 0.5rem;
+    position: fixed;
+    z-index: 1000;
+    inset: 0 0 0 30%;
+    list-style: none;
+    padding: min(20rem, 15vh) 2rem;
+    margin: 0;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 500ms ease-in-out;
+  }
+
+  .primary-navigation[data-visible="true"] {
+    transform: translateX(0);
+  }
+
+  .primary-navigation.underline-indicators > .active {
+    border: 0;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+    position: absolute;
+    z-index: 2000;
+    right: 1rem;
+    top: 2rem;
+    background: transparent;
+    background-image: url(./assets/shared/icon-hamburger.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1.5rem;
+    aspect-ratio: 1;
+    border: 0;
+  }
+  .mobile-nav-toggle[aria-expanded="true"] {
+    background-image: url(./assets/shared/icon-close.svg);
+  }
+
+  .mobile-nav-toggle:focus-visible {
+    outline-offset: 5px;
+  }
+}
+
+@media (min-width: 35em) {
+  .primary-navigation {
+    padding-inline: clamp(3rem, 5vw, 7rem);
+  }
+}
+
+@media (min-width: 35em) and (max-width: 45em) {
+  .primary-navigation a > span {
+    display: none;
+  }
+}
+
+@media (min-width: 45em) {
+  .primary-header::after {
+    content: "";
+    display: block;
+    position: relative;
+    height: 1px;
+    width: 100%;
+    margin-right: -3rem;
+    background: hsl(var(--clr-white) / 0.25);
+    order: 1;
+  }
+
+  nav {
+    order: 2;
+  }
+
+  .primary-navigation {
+    margin-block: 2rem;
+  }
 }
 
 .underline-indicators > * {
@@ -379,4 +499,29 @@ select {
 .number-indicators > [aria-selected="true"] {
   background-color: hsl(var(--clr-white));
   color: hsl(var(--clr-dark));
+}
+
+/* ----------------------------- */
+/* Page specific background      */
+/* ----------------------------- */
+body {
+  background-size: cover;
+  background-position: bottom center;
+}
+/* home */
+.home {
+  background-image: url(./assets/home/background-home-mobile.jpg);
+}
+
+@media (min-width: 35rem) {
+  .home {
+    background-position: center center;
+    background-image: url(./assets/home/background-home-tablet.jpg);
+  }
+}
+
+@media (min-width: 45rem) {
+  .home {
+    background-image: url(./assets/home/background-home-desktop.jpg);
+  }
 }
