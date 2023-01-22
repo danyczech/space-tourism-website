@@ -98,7 +98,7 @@ body {
 img,
 picture {
   max-width: 100%;
-  display: block;
+  /*display: block;  can't use together with hidden attribute - doesn't work!!! */
 }
 
 /* make form elements easier to work with */
@@ -530,7 +530,7 @@ body {
 
 /* crew */
 .crew {
-  background-image: url(./assets/home/background-crew-mobile.jpg);
+  background-image: url(./assets/crew/background-crew-mobile.jpg);
 }
 
 @media (min-width: 35rem) {
@@ -580,6 +580,7 @@ body {
 .grid-container--destination > picture {
   grid-area: image;
   max-width: 60%;
+  align-self: start;
 }
 
 .grid-container--destination > .tab-list {
@@ -609,7 +610,7 @@ body {
   grid-template-areas:
     "title"
     "image"
-    "dots"
+    "tabs"
     "content";
 }
 
@@ -624,14 +625,14 @@ body {
 }
 
 .grid-container--crew > .dot-indicators {
-  grid-area: dots;
+  grid-area: tabs;
 }
 
-.grid-container--crew > .crew-info {
+.grid-container--crew > .crew-details {
   grid-area: content;
 }
 
-.crew-info h2 {
+.crew-details h2 {
   opacity: 0.5;
 }
 
@@ -652,7 +653,7 @@ body {
     grid-template-areas:
       "title"
       "content"
-      "dots"
+      "tabs"
       "image";
     margin-bottom: 0;
   }
@@ -704,17 +705,20 @@ body {
 
 @media (min-width: 45em) {
   .grid-container--crew {
+    grid-template-columns: minmax(1rem, 1fr) minmax(0, 37rem) minmax(0, 23rem) minmax(
+        1rem,
+        1fr
+      );
+    justify-items: start;
     grid-template-areas:
       ". title title ."
       ". content image ."
-      " . dots image .";
+      " . tabs image .";
   }
   .grid-container--crew > picture {
+    grid-column: span 2;
     max-width: 90%;
     align-self: end;
     justify-self: end;
-  }
-  .grid-container--crew > .dot-indicators {
-    justify-self: start;
   }
 }
