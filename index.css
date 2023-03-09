@@ -765,13 +765,13 @@ body {
       );
     justify-items: start;
     grid-template-areas:
-      ". title title ."
+      ". title image ."
       ". content image ."
       " . tabs image .";
   }
   .grid-container--crew > picture {
     grid-column: span 2;
-    max-width: 90%;
+    max-width: 70%;
     align-self: end;
     justify-self: end;
   }
